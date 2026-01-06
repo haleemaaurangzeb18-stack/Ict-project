@@ -66,6 +66,12 @@ footer{
 </style>
 </head>
 <body>
+    <nav>
+    <a href="index.html">Home</a> |
+    <a href="categories.html">Categories</a> |
+    <a href="cart.html">Cart</a>
+</nav>
+
 
 <h2 id="catTitle"></h2>
 <div class="cards" id="itemList"></div>
@@ -154,10 +160,6 @@ function loadItems(){
             </div>`;
         });
     }
-}
-
-function goBack(){
-    window.location.href="categories.html";
 }
 
 loadItems();
