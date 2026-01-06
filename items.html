@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Items - Mid Night Pantry</title>
+<style>
+:root{
+    --bg:#f9fafb;
+    --primary:#c7d2fe;
+    --secondary:#a7f3d0;
+    --accent:#fbcfe8;
+    --text:#374151;
+    --card:#ffffff;
+}
+*{box-sizing:border-box;}
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    text-align:center;
+}
+h2{color:#6d28d9; margin-top:20px;}
+.cards{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:20px;
+    padding:30px;
+}
+.card{
+    background:var(--card);
+    width:220px;
+    padding:15px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    transition:0.3s;
+}
+.card:hover{transform:translateY(-8px);}
+.card img{
+    width:100%;
+    height:130px;
+    object-fit:cover;
+    border-radius:15px;
+}
+.btn{
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+    border:none;
+    padding:12px 26px;
+    border-radius:30px;
+    cursor:pointer;
+    font-weight:bold;
+    color:#1f2937;
+    margin:20px;
+    transition:0.3s;
+}
+.btn:hover{
+    transform:scale(1.05);
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+footer{
+    margin-top:40px;
+    padding:20px;
+    color:#9ca3af;
+}
+</style>
+</head>
+<body>
+
+<h2 id="catTitle"></h2>
+<div class="cards" id="itemList"></div>
+<button class="btn" onclick="goBack()">Back to Categories</button>
+
+<footer>
+2025 MID NIGHT PANTRY — Freshness delivered after dark 🌙
+</footer>
+
+<script>
+var products={
+"Fruits & Vegetables":[
+{name:"Apple",price:200,img:"https://images.unsplash.com/photo-1567306226416-28f0efdc88ce"},
+{name:"Banana",price:80,img:"https://www.healthifyme.com/blog/wp-content/uploads/2021/09/shutterstock_375477439-1.jpg"},
+{name:"Orange",price:120,img:"https://images.unsplash.com/photo-1547514701-42782101795e"},
+{name:"Mango",price:200,img:"https://images.unsplash.com/photo-1553279768-865429fa0078"},
+{name:"Grapes",price:180,img:"https://images.unsplash.com/photo-1537640538966-79f369143f8f"},
+{name:"Tomato",price:90,img:"https://tse2.mm.bing.net/th/id/OIP.3EkG3f-WlGI_fU-gX2L4bAHaFj?pid=Api&P=0&h=220"},
+{name:"Potato",price:70,img:"https://tse2.mm.bing.net/th/id/OIP.MeVmU4vtDMfEhWQJUirzWgHaE7?pid=Api&P=0&h=220"},
+{name:"Onion",price:85,img:"https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb"},
+{name:"Cucumber",price:60,img:"https://images.unsplash.com/photo-1604977042946-1eecc30f269e"},
+{name:"Spinach",price:50,img:"https://images.unsplash.com/photo-1576045057995-568f588f82fb"}
+],
+"Dairy & Eggs":[
+{name:"Milk",price:180,img:"https://tse4.mm.bing.net/th/id/OIP.AWzJMDh_iUDPr-bO0qJa1AHaJ4?pid=Api&P=0&h=220"},
+{name:"Eggs",price:260,img:"https://images.unsplash.com/photo-1587486913049-53fc88980cfc"},
+{name:"Butter",price:320,img:"https://tse1.mm.bing.net/th/id/OIP.GCFIjm8gdU4SgCyTB2khOgHaEK?pid=Api&P=0&h=220"},
+{name:"Cheese",price:450,img:"https://tse1.mm.bing.net/th/id/OIP.EEOs5OQQwPX8B-hxwCjuagHaEK?pid=Api&P=0&h=220"},
+{name:"Yogurt",price:200,img:"https://tse2.mm.bing.net/th/id/OIP.yoc9kfXDwUIwITc2S08NNAHaHa?pid=Api&P=0&h=220"},
+{name:"Cream",price:250,img:"https://tse4.mm.bing.net/th/id/OIP.SrDlVHS5gPlbO7UoNErYoQHaLH?pid=Api&P=0&h=220"},
+{name:"Paneer",price:420,img:"https://tse3.mm.bing.net/th/id/OIP.TaX8DNaaAPs4WDV3aDq9pQHaLH?pid=Api&P=0&h=220"}
+],
+"Meat & Poultry":[
+{name:"Chicken Whole",price:550,img:"https://tse2.mm.bing.net/th/id/OIP.3B4SQMFF7BST2jz2UCjrxgHaFu?pid=Api&P=0&h=220"},
+{name:"Chicken Breast",price:650,img:"https://images.unsplash.com/photo-1604503468506-a8da13d82791"},
+{name:"Beef",price:900,img:"https://tse4.mm.bing.net/th/id/OIP.s5I8tEPY2TY-1TMC-y6XVQHaE8?pid=Api&P=0&h=220"},
+{name:"Mutton",price:1200,img:"https://tse1.mm.bing.net/th/id/OIP.QyEgvp61eXjUWgWNcNLRqQHaE7?pid=Api&P=0&h=220"},
+{name:"Fish",price:700,img:"https://tse3.mm.bing.net/th/id/OIP.grmqVuwmjP6lkG1MI2xApQHaEK?pid=Api&P=0&h=220"},
+{name:"Sausages",price:480,img:"https://www.fieldtofork.net.au/wp-content/uploads/2020/02/Sausages-x10-varieties.jpg"}
+],
+"Bakery":[
+{name:"Bread",price:120,img:"https://images.unsplash.com/photo-1549931319-a545dcf3bc73"},
+{name:"Croissant",price:180,img:"https://cdn.pixabay.com/photo/2022/11/08/05/06/bread-7577706_1280.jpg"},
+{name:"Donut",price:130,img:"https://images.unsplash.com/photo-1551024601-bec78aea704b"},
+{name:"Cup Cake",price:150,img:"https://tse3.mm.bing.net/th/id/OIP.jYl9ljJhxEcw9_4l9Io30wHaHa?pid=Api&P=0&h=220"},
+{name:"Cake Slice",price:220,img:"https://images.unsplash.com/photo-1602351447937-745cb720612f"},
+{name:"Cookies Pack",price:160,img:"https://images.unsplash.com/photo-1499636136210-6f4ee915583e"}
+],
+"Snacks":[
+{name:"Chips",price:100,img:"https://tse1.mm.bing.net/th/id/OIP.kzDkpO0EH2RRHqs-8RTSzgHaEK?pid=Api&P=0&h=220"},
+{name:"Cookies",price:150,img:"https://images.unsplash.com/photo-1499636136210-6f4ee915583e"},
+{name:"Popcorn",price:90,img:"https://tse1.mm.bing.net/th/id/OIP.cAchmx0tSXV1fmhfVRD0EgHaFj?pid=Api&P=0&h=220"},
+{name:"Chocolate",price:200,img:"https://images.unsplash.com/photo-1549007994-cb92caebd54b"},
+{name:"Biscuits",price:80,img:"https://images.unsplash.com/photo-1606312619070-d48b4c652a52"},
+{name:"Nimco Mix",price:160,img:"https://tse4.mm.bing.net/th/id/OIP.QhMEC72VIbuyXWAjOZtsZwHaHa?pid=Api&P=0&h=220"},
+{name:"Nachos",price:180,img:"https://i.pinimg.com/originals/58/29/8f/58298f418ac16bcb2255e4a58dcd018a.jpg"},
+{name:"Candy Pack",price:70,img:"https://tse2.mm.bing.net/th/id/OIP.0kQPB-4mxJWbu_Z__NfX3AHaHa?pid=Api&P=0&h=220"}
+],
+"Beverages":[
+{name:"Mineral Water",price:60,img:"https://images.unsplash.com/photo-1523362628745-0c100150b504"},
+{name:"Soft Drink",price:120,img:"https://images.unsplash.com/photo-1629203851122-3726ecdf080e"},
+{name:"Fresh Juice",price:140,img:"https://images.unsplash.com/photo-1544145945-f90425340c7e"},
+{name:"Energy Drink",price:220,img:"https://tse4.mm.bing.net/th/id/OIP.tniFai386GbIvMjg4-zCyQHaEK?pid=Api&P=0&h=220"},
+{name:"Tea",price:90,img:"https://images.unsplash.com/photo-1511920170033-f8396924c348"},
+{name:"Coffee",price:180,img:"https://images.unsplash.com/photo-1509042239860-f550ce710b93"},
+{name:"Milk Shake",price:200,img:"https://images.unsplash.com/photo-1577805947697-89e18249d767"}
+]
+};
+function getCategoryFromURL(){
+    const params=new URLSearchParams(window.location.search);
+    return params.get('category') || "Fruits & Vegetables";
+}
+
+function loadItems(){
+    let cat=getCategoryFromURL();
+    document.getElementById("catTitle").innerText=cat;
+    let itemList=document.getElementById("itemList");
+    itemList.innerHTML="";
+    if(products[cat]){
+        products[cat].forEach(p=>{
+            itemList.innerHTML+=`
+            <div class="card">
+                <img src="${p.img}">
+                <b>${p.name}</b><br>
+                PKR ${p.price}
+            </div>`;
+        });
+    }
+}
+
+function goBack(){
+    window.location.href="categories.html";
+}
+
+loadItems();
+</script>
+
+</body>
+</html>
