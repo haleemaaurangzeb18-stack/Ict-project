@@ -26,4 +26,4 @@ No user login system
 Limited features because it is a beginner project
 7. Conclusion:
 The Midnight Pantry project helped me understand how websites work. I learned how to use HTML, CSS, and JavaScript to build a simple website. This project improved my skills
- LIVE LINK:  https://haleemaaurangzeb18-stack.github.io/Ict-project/
+ LIVE LINK:  
